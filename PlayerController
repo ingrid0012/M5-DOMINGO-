@@ -8,17 +8,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce= 7f; //fuerza de salto
     bool isGrounded=false; //toca el piso o no pj
     Rigidbody2D rb; 
+    [SerializeField] LayerMask groundLayer;//capa
+    SpriteRenderer sprite; //girar
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>(); 
     }
 
     // Update is called once per frame
     void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
+
+         if (horizontalInput > 0)
+        {
+            sprite.flipX = false;
+        }
+        if (horizontalInput < 0)
+        {
+            sprite.flipX = true;
+        }
+
         rb.velocity = new Vector2(horizontalInput*speed, rb.velocity.y);
+
+        Collider2D col = GetComponent<Collider2D>(); 
+        isGrounded = Physics2D.OverlapCircle(transform.position - transform.up * ((col.bounds.extents.y / transform.localScale.y - col.offset.y) * transform.localScale.y), 0.01f, groundLayer);
+
+
 
         if(Input.GetKeyDown(KeyCode.Space)&& isGrounded)
         {
@@ -28,3 +46,4 @@ public class PlayerController : MonoBehaviour
 
     }
 }
+
