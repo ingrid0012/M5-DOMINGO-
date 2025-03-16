@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ParallaxBackground : MonoBehaviour
+{   
+    public Transform[] backgrounds; // almacenan los fondos
+    public float[] parallaxSpeeds; //velocidad fondos
+    private float cameraHorizontalPosition; //almacena la posición horizontal actual de la cámara.
+    private float previousCameraHorizontalPosition;//almacena la posición horizontal anterior de la cámara.
+    private float cameraVerticalPosition;
+    private float previousCameraVerticalPosition;
+
+
+     void Start()
+    {
+        
+    }
+
+     void Update()
+    {
+         cameraHorizontalPosition = Camera.main.transform.position.x;
+         if(cameraHorizontalPosition != previousCameraHorizontalPosition)
+         {
+            for (int i = 0; i < backgrounds.Length; i++)
+            {
+                float parallax = (previousCameraHorizontalPosition - cameraHorizontalPosition) * parallaxSpeeds[i];
+                backgrounds[i].position += new Vector3(parallax, 0f, 0f);
+            }
+
+
+         }
+
+
+
+    }
+
+}
