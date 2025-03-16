@@ -28,6 +28,7 @@ public class ParallaxBackground : MonoBehaviour
                 backgrounds[i].position += new Vector3(parallax, 0f, 0f);
             }
 
+            previousCameraHorizontalPosition = cameraHorizontalPosition;
 
          }
 
